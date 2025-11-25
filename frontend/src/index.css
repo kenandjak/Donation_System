@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: Stack Sans Notch;
+  src: url("../src/assets/fonts/StackSansNotch-SemiBold.ttf") format("woff2");
+  font-family: Holly Berry Pop;
+  src: url("../src/assets/fonts/HollyBerryPop.ttf") format("woff2");
+}
+
+@theme {
+  --font-stackNotch: Stack Sans Notch;
+  --font-hollyBerry: Holly Berry Pop;
+}
