@@ -47,6 +47,10 @@ In the frontend, knowledge of styling and the use of components was improved.</p
    ```sh
    npm run dev
    ```
+3. Go to Register link:
+   ```sh
+   http://localhost:5173/users/register
+   ```
 
 ## ⚖️ License
 
