@@ -30,7 +30,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-pink-700 rounded-md shadow-xl py-2 border border-pink-600">
             <Link
-              to="/profile"
+              to="/users/login/dashboard"
               className="block px-4 py-2 text-xl text-white hover:bg-pink-600 transition-colors font-semibold"
               onClick={() => setIsMenuOpen(false)}
             >

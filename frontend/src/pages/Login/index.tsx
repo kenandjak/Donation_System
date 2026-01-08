@@ -2,6 +2,7 @@ import logo_donate from "../../assets/donate.png";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import InputPassword from "../../components/InputPassword";
 
 function Login() {
   const emailRef = useRef(null);
@@ -21,6 +22,8 @@ function Login() {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
       alert("Error registering user. " + errorMessage);
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
     }
   }
   return (
@@ -53,12 +56,7 @@ function Login() {
             type="email"
             className="w-full xl:w-2xl px-3 py-2 xl:text-xl bg-white border border-pink-500 rounded-md focus:outline-none hover:shadow-2xl"
           />
-          <input
-            ref={passwordRef}
-            placeholder="Password: "
-            type="password"
-            className="w-full xl:w-2xl px-3 py-2 xl:text-xl bg-white border border-pink-500 rounded-md focus:outline-none hover:shadow-2xl"
-          />
+          <InputPassword ref={passwordRef} placeholder="Password: " />
           <button className="w-full xl:w-2xl xl:py-4 xl:text-2xl bg-pink-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-rose-400">
             Login
           </button>
