@@ -11,22 +11,43 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
   try {
-    const user = req.body;
+    const { email, username, password } = req.body;
+    const usernameRegex = /^[a-zA-Z]/;
+
+    if (username.length < 5) {
+      return res.status(400).json({
+        message: "Username must be at least 5 characters long.",
+      });
+    }
+
+    if (!usernameRegex.test(username)) {
+      return res.status(400).json({
+        message: "Username must start with a letter.",
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        message: "Password must be at least 6 characters long.",
+      });
+    }
+
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(user.password, salt);
+    const hashPassword = await bcrypt.hash(password, salt);
 
     // It's indicating the model I want to access
     // I defined it as 'Donor' in schema.prisma.
     await prisma.donor.create({
       data: {
-        email: user.email,
-        username: user.username,
+        email: email,
+        username: username,
         password: hashPassword,
       },
     });
+
     res.status(201).json({ message: "Registered!" });
-    //res.status(201).json(userDB);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error." });
   }
 });

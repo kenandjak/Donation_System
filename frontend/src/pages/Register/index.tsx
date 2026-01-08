@@ -1,6 +1,6 @@
 import logo_donate from "../../assets/donate.png";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import InputPassword from "../../components/InputPassword";
 
@@ -8,19 +8,43 @@ function Register() {
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const navigate = useNavigate();
+
+  // Estado para mostrar erros sem usar alert
+  const [error, setError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setError("");
+    const username = usernameRef.current.value;
+    const password = passwordRef.current.value;
+    const usernameRegex = /^[a-zA-Z]/;
+
+    if (username.length < 5) {
+      setError("Username must be at least 5 characters long.");
+      return;
+    }
+
+    if (!usernameRegex.test(username)) {
+      setError("Username must start with a letter.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
     try {
       await api.post("/users/register", {
-        username: usernameRef.current.value,
+        username: username,
         email: emailRef.current.value,
-        password: passwordRef.current.value,
+        password: password,
       });
       alert("User successfully registered!");
+      navigate("/users/login");
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
-      alert("Error registering user. " + errorMessage);
+      setError("Error registering user: " + errorMessage);
     }
   }
   return (
@@ -45,6 +69,11 @@ function Register() {
           className="w-full px-8 pb-8 flex flex-col gap-5 items-center justify-center"
           onSubmit={handleSubmit}
         >
+          {error && (
+            <div className="w-full xl:w-2xl bg-red-100 text-red-700 p-3 rounded-md border border-red-400 text-sm font-semibold">
+              {error}
+            </div>
+          )}
           <input
             ref={usernameRef}
             placeholder="Username: "
