@@ -8,6 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/users/register" replace />} />
         <Route path="users/register" element={<Register />} />
         <Route path="users/login" element={<Login />} />
         <Route
