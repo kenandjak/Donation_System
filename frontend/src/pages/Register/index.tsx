@@ -10,7 +10,6 @@ function Register() {
   const passwordRef = useRef(null);
   const navigate = useNavigate();
 
-  // Estado para mostrar erros sem usar alert
   const [error, setError] = useState("");
 
   async function handleSubmit(event) {
@@ -83,6 +82,7 @@ function Register() {
           <input
             ref={emailRef}
             placeholder="Email: "
+            required
             type="email"
             className="w-full xl:w-2xl px-3 py-2 xl:text-xl bg-white border border-pink-500 rounded-md focus:outline-none hover:shadow-2xl"
           />

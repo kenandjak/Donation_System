@@ -13,6 +13,11 @@ router.post("/register", async (req, res) => {
   try {
     const { email, username, password } = req.body;
     const usernameRegex = /^[a-zA-Z]/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format." });
+    }
 
     if (username.length < 5) {
       return res.status(400).json({
