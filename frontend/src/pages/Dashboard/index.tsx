@@ -7,6 +7,12 @@ import Back from "../../components/BackButton";
 function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "/login";
+    return null;
+  }
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -14,8 +20,6 @@ function Dashboard() {
 
   useEffect(() => {
     async function loadUserData() {
-      const token = localStorage.getItem("token");
-
       try {
         const response = await fetch(import.meta.env.VITE_DASHBOARD_URL, {
           method: "GET",
